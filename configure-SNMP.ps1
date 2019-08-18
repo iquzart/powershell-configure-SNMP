@@ -18,15 +18,16 @@ $CommunityString = "" # Your community string configured with Monitoring node.
 function configure_SNMP {
   
   Write-Host "Configuring SNMP-Services with your Community string and Monitoring Node"
+  Write-Host "------------------------------------------------------------------------"
   
   reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\SNMP\Parameters\PermittedManagers" /v 1 /t REG_SZ /d localhost /f | Out-Null
-  Write-Host "Configuration of PermittedManger localhost: Done!"
+  Write-Host "1. Configuration of PermittedManger localhost: Done!"
   
   reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\SNMP\Parameters\PermittedManagers" /v 2 /t REG_SZ /d $MonitoringNode /f | Out-Null
-  Write-Host "Configuration of PermittedManger $MonitoringNode : Done!"
+  Write-Host "2. Configuration of PermittedManger $MonitoringNode : Done!"
   
   reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\SNMP\Parameters\ValidCommunities" /v $CommunityString /t REG_DWORD /d 4 /f | Out-Null
-  Write-Host "Configuration of Community String - $CommunityString : Done!"
+  Write-Host "3. Configuration of Community String - $CommunityString : Done!"
   
 }
 
@@ -39,15 +40,15 @@ $snmp_stat = Get-WindowsFeature -Name SNMP-Service
 # Install/Enable SNMP-Service 
 If ($snmp_stat.Installed -ne "True") {
  
-  Write-Host “Enabling SNMP-Service Feature”
+  Write-Host "Enabling SNMP-Service Feature `n"
   Get-WindowsFeature -name SNMP* | Add-WindowsFeature -IncludeManagementTools | Out-Null
 
   configure_SNMP $MonitoringNode $CommunityString
 
 }
-ElseIf ($snmp_stat.Installed -eq “True”) {
+ElseIf ($snmp_stat.Installed -eq "True") {
 
-  Write-Host "SNMP Services Already Installed"
+  Write-Host "SNMP Services Already Installed `n"
   configure_SNMP $MonitoringNode $CommunityString
 
 }
