@@ -1,5 +1,5 @@
 ######################################################################################################
-# Description   :- Powershell Script To Install SNMP Services (SNMP Service, SNMP WMI Provider)
+# Description   :- Powershell Script To Install/Configure SNMP Services (SNMP Service, SNMP WMI Provider)
 # Author        :- Muhammed Iqbal - Meraas IT
 # Created       :- 15-Aug-2019
 # Updated       :- 15-Aug-2019
